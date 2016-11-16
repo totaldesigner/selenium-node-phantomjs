@@ -29,3 +29,10 @@ USER seluser
 # Following line fixes
 # https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
+
+#==============================
+# Scripts to run Selenium Node
+#==============================
+COPY entry_point.sh /opt/bin/entry_point.sh
+RUN chmod +x /opt/bin/entry_point.sh
+CMD ["/opt/bin/entry_point.sh"]

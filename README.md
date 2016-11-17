@@ -17,5 +17,5 @@ $ docker run -d -P --name selenium-hub selenium/hub
 Once the hub is up and running will want to launch nodes that can run tests. You can run as many nodes as you wish.
 
 ```
-$ docker run -d --name selenium-node-phantomjs --link selenium-hub:hub totaldesigner/node-phantomjs
+$ docker run -d --name selenium-node-phantomjs --link selenium-hub:hub totaldesigner/selenium-node-phantomjs
 ```

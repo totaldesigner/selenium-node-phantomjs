@@ -1,7 +1,16 @@
-FROM selenium/node-base:3.0.1-aluminum
+FROM selenium/base:3.0.1-aluminum
 MAINTAINER totaldesigner <totaldesigner@gmail.com>
 
-USER root
+ENV DEBIAN_FRONTEND noninteractive
+ENV DEBCONF_NONINTERACTIVE_SEEN true
+
+#===================
+# Timezone settings
+# Possible alternative: https://github.com/docker/docker/issues/3359#issuecomment-32150214
+#===================
+ENV TZ "US/Pacific"
+RUN echo "${TZ}" > /etc/timezone \
+&& dpkg-reconfigure --frontend noninteractive tzdata
 
 #==============
 # PhantomJS
@@ -13,21 +22,20 @@ RUN tar -xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 && rm phantomjs-2.1.1-linux-x
 RUN mv /phantomjs-2.1.1-linux-x86_64 /usr/local/phantomjs-2.1.1-linux-x86_64
 RUN ln -s /usr/local/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs
 
-#========================
-# Selenium Configuration
-#========================
-ENV NODE_MAX_INSTANCES 1
-ENV NODE_MAX_SESSION 1
-ENV NODE_REGISTER_CYCLE 5000
-COPY generate_config /opt/selenium/generate_config
-RUN chmod +x /opt/selenium/generate_config
-
 #==============================
 # Scripts to run Selenium Node
 #==============================
 COPY entry_point.sh /opt/bin/entry_point.sh
 RUN chmod +x /opt/bin/entry_point.sh
 
-RUN chown -R seluser:seluser /opt/selenium
+#============================
+# Some configuration options
+#============================
+ENV SCREEN_WIDTH 1360
+ENV SCREEN_HEIGHT 1020
+ENV SCREEN_DEPTH 24
+ENV DISPLAY :99.0
 
 USER seluser
+
+CMD ["/opt/bin/entry_point.sh"]

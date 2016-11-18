@@ -1,5 +1,4 @@
 #!/bin/bash
-
 export GEOMETRY="$SCREEN_WIDTH""x""$SCREEN_HEIGHT""x""$SCREEN_DEPTH"
 
 if [ -z "$HUB_PORT_4444_TCP_ADDR" ]; then

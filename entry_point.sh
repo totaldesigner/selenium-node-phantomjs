@@ -13,7 +13,7 @@ function shutdown {
 
 #ip="$(ifconfig | grep -A 1 'eno1' | tail -1 | cut -d ':' -f 2 | cut -d ' ' -f 1)"
 #phantomjs --webdriver=$ip:8080 --webdriver-selenium-grid-hub=http://$HUB_PORT_4444_TCP_ADDR:$HUB_PORT_4444_TCP_PORT
-phantomjs --webdriver=$HUB_PORT_4444_TCP_ADDR:5555 --webdriver-selenium-grid-hub=http://$HUB_PORT_4444_TCP_ADDR:$HUB_PORT_4444_TCP_PORT
+phantomjs --webdriver=5555 --webdriver-selenium-grid-hub=http://$HUB_PORT_4444_TCP_ADDR:$HUB_PORT_4444_TCP_PORT
 
 trap shutdown SIGTERM SIGINT
 wait $NODE_PID
